@@ -1,11 +1,11 @@
 package utils
 
 import (
-    "fmt"
-    "os"
-    "errors"
+	"errors"
+	"fmt"
+	"os"
 
-    "gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v2"
 )
 
 type Preferences struct {
@@ -16,7 +16,7 @@ type Preferences struct {
 }
 
 // defaultPreferences returns the default preferences
-func defaultPreferences(path string) (*Preferences, error) {
+func defaultPreferences() (*Preferences, error) {
     preferences := &Preferences{
         Anime: "9anime",
         Manga: "mangadex",
@@ -24,7 +24,7 @@ func defaultPreferences(path string) (*Preferences, error) {
         Token: "",
     }
 
-    err := createDefaultConfig(path, preferences)
+    err := DumpConfig(preferences)
     if err != nil {
         return nil, errors.New("Error creating config file")
     }
@@ -54,7 +54,7 @@ func LoadPreferences(verbose bool) (*Preferences, error) {
         if verbose {
             fmt.Println("Config file not found, using default preferences")
         }
-        return defaultPreferences(cfgDir)
+        return defaultPreferences()
     }
     defer cfgFile.Close()
 
