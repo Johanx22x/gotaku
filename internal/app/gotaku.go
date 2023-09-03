@@ -1,7 +1,6 @@
 package app
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
@@ -34,16 +33,6 @@ func GetApp() *Gotaku {
     return instance
 }
 
-// Authenticate authenticates the user using the provided manager
-func (app *Gotaku) Authenticate() (string, error) {
-    token, err := app.UserManager.Authenticate()
-    if err != nil {
-        return "", errors.New("Authentication failed")
-    }
-
-    return token, nil
-}
-
 // Run runs the application
 func (app *Gotaku) Run() {
     if app.Config.Verbose {
@@ -71,7 +60,7 @@ func (app *Gotaku) Run() {
         if app.Config.Verbose {
             fmt.Println("No cached token found, authenticating...")
         }
-        token, err := app.Authenticate()
+        token, err := app.UserManager.Authenticate()
         if err != nil {
             fmt.Println(err)
             os.Exit(1)
