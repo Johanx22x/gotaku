@@ -22,6 +22,7 @@ func main() {
     }
 
     if *verbose {
+        app.Config.Verbose = true
         fmt.Println("Verbose output enabled")
     }
 
